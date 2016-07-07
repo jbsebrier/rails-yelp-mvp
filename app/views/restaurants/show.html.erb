@@ -5,13 +5,27 @@
 <p><%= @restaurant.address %>, <%= @restaurant.phone_number %></p>
 
 
-<%= link_to "Ajouter un commentaire", new_restaurant_review_path(@restaurant) %>
 
-
+<h3>Les commentaires de nos utilisateurs:</h3>
 <ul>
   <% @restaurant.reviews.each do |review| %>
     <li> <%= review.rating %>/5 - <%= review.content %></li>
   <% end %>
 </ul>
+
+
+
+<button data-toggle="modal" data-target="#comment-new">Ajoutez votre commentaire sur <%= @restaurant.name %> </button>
+
+
+<div class="modal fade" id="comment-new">
+  <div class="col-sm-6">
+    <%= simple_form_for [@restaurant, @review] do |f| %>
+      <%= f.input :rating %>
+      <%= f.input :content %>
+      <%= f.button :submit %>
+    <% end %>
+  </div>
+</div>
 
 <%= link_to "Retour à la liste", restaurants_path %>
